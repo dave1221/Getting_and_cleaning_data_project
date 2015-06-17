@@ -1,9 +1,4 @@
----
-title: "CodeBook"
-output: 
-  html_document: 
-    keep_md: yes
----
+# CodeBook
 
 #Variables
 

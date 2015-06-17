@@ -1,24 +1,15 @@
----
-title: "READ ME : How the script work"
-output: 
-  html_document: 
-    keep_md: yes
----
+# READ ME : How the script work
 
 ##Before you read:
 Considering the purpose of this project is to be graded by peers, and this course is Chinese version. Just in case there are chinese peers, this readme instruction are both in English and Chinese.
 
 考虑到这个项目是同学互评，而且是中文课程，所以说明书会有中文和英文
 
-```{r information, echo=FALSE}
-time<-as.character(Sys.time())
-version<-R.version$version.string
-platform<-R.version$platform
-```
 
-Updated time `r time` ; R version `r version` ; Platform `r platform`
 
-更新时间 `r time` ; R 版本 `r version`; 平台 `r platform`
+Updated time 2015-06-17 18:03:13 ; R version R version 3.2.0 (2015-04-16) ; Platform x86_64-apple-darwin13.4.0
+
+更新时间 2015-06-17 18:03:13 ; R 版本 R version 3.2.0 (2015-04-16); 平台 x86_64-apple-darwin13.4.0
 
 #Background 
 
@@ -38,8 +29,16 @@ The purpose of this project is to prepare tidy data that can be used for later a
 #Download and Unzip the Data
 下载和解压数据
 
-```{r download_and_unzip}
+
+```r
 if(!file.exists("/data")) dir.create("./data")
+```
+
+```
+## Warning in dir.create("./data"): './data' already exists
+```
+
+```r
 Url<-"https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 download.file(Url, "./data/UCI HAR Dataset.zip", method = "curl")
 unzip("./data/UCI HAR Dataset.zip",exdir = "./data")
@@ -48,7 +47,8 @@ unzip("./data/UCI HAR Dataset.zip",exdir = "./data")
 #Read data
 读数据
 
-```{r read_data}
+
+```r
 wd<-"./data/UCI HAR Dataset"
 Teset<-read.table(file.path(wd, "test/X_test.txt"))
 Telabel<-read.table(file.path(wd, "test/y_test.txt"))
@@ -64,7 +64,8 @@ Inside: Te means test, Tr means train, label means activity label
 #Merges the training and the test sets to create one data set.
 整合培训和测试集，创建一个数据集
 
-```{r merge}
+
+```r
 te<-cbind(Tesubject,Telabel,Teset)
 tr<-cbind(Trsubject,Trlabel,Trset)
 da<-rbind(tr,te)
@@ -79,7 +80,8 @@ da表示要处理的原始数据框
 Note that characters in feature.txt include "mean" are "...mean()" and "...meanFreq()"
 注意到在feature.txt中包含mean的字符有"...mean()" 和 "...meanFreq()"
 
-```{r extract}
+
+```r
 feature<-read.table(file.path(wd,"features.txt"))
 meancol<-setdiff(grep("mean", feature[,2]),grep("meanFreq", feature[,2]))
 stdcol<-grep("std", feature[,2])
@@ -90,7 +92,8 @@ da<-da[,c(1,2,Col)]
 #Uses descriptive activity names and descriptive variable names. 
 使用描述性活动名和变量名
 
-```{r names}
+
+```r
 colnames(da)<-c("subject","activity",as.character(feature[Col-2,2]))
 activityname<-read.table(file.path(wd,"activity_labels.txt"), col.names = c("activity","Activitynames"))
 da<-merge(da,activityname,by="activity",all=T)
@@ -101,7 +104,8 @@ da<-da[,c(69,2,3:68)]
 
 从上一步的数据集中，针对每个活动和每个主题使用每个表里的平均值建立第2个独立的整洁数据集.
 
-```{r create_tidydata}
+
+```r
 library(reshape2)
 da<-melt(da,c("Activitynames","subject"))
 da<-acast(da, variable~Activitynames~subject, mean)
@@ -114,7 +118,8 @@ da<-format(da, nsmall = 10)
 #upload data set as a txt file 
 上传txt格式的数据
 
-```{r}
+
+```r
 write.table(da,"run_analysis.txt",col.names = F,row.names = F)
 ```
 
