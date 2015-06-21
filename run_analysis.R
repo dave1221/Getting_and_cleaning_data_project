@@ -20,18 +20,29 @@ feature<-read.table(file.path(wd,"features.txt"))
 meancol<-setdiff(grep("mean", feature[,2]),grep("meanFreq", feature[,2]))
 stdcol<-grep("std", feature[,2])
 Col<-sort(c(meancol,stdcol))+2
-da<-da[,c(1,2,Col)]
-#names
-colnames(da)<-c("subject","activity",as.character(feature[Col-2,2]))
+da1<-da[,c(1,2,Col)]
+#names da1
+colnames(da1)<-c("subject","activity",as.character(feature[Col-2,2]))
 activityname<-read.table(file.path(wd,"activity_labels.txt"),col.names = c("activity","Activitynames"))
-da<-merge(da,activityname,by="activity",all=T)
-da<-da[,c(69,2,3:68)]
+da1<-merge(da1,activityname,by="activity",all=T)
+da2<-da1[,c(69,2,3:68)]
 #tidy data set
 library(reshape2)
-da<-melt(da,c("Activitynames","subject"))
-da<-acast(da, variable~Activitynames~subject, mean)
-da<-as.data.frame(da)
-da<-t(da)
-da<-format(da, nsmall = 10)
-write.table(da,"run_analysis.txt",col.names = F,row.names = F)
-
+library(plyr)
+da3<-melt(da2,c("Activitynames","subject"))
+da4<-acast(da3, variable~Activitynames~subject, mean)
+da5<-as.data.frame(da4)
+da5<-t(da5)
+da5<-as.data.frame(da5)
+da6<-cbind(activity=rep(as.character(activityname$Activitynames),each=30),object=rep(1:30,times=6),da5)
+nof<-ncol(da6)-2
+nda<-list()
+for(i in 1:nof){
+        f1<-colnames(da6[2+i])
+        f2<-strsplit(f1,"-",fixed = T)[[1]]
+        nda[[i]]<-cbind(da6[,2:1],feature=f2[1],method=f2[2],axial=f2[3],meanvalue=da6[,2+i])
+}
+mda<-join_all(nda,type="full")
+mda<-mda[order(mda$object,mda$activity,mda$feature,mda$method,mda$axial),]
+#write
+write.table(mda,"run_analysis.txt",row.names = F)

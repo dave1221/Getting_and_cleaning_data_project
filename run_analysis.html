@@ -64,40 +64,162 @@ img {
 </div>
 
 
-<p>Updated time 2015-06-21 08:16:21 ; R version 3.2.0 (2015-04-16) ; Platform x86_64-apple-darwin13.4.0</p>
+<div id="before-you-read" class="section level2">
+<h2>Before you read:</h2>
+<p>Considering the popuse of this project is to be graded by peers, and this course is Chinese version. Just in case there are chinese peers, this instruction are both in English and Chinese.</p>
+<p>考虑到这个项目是同学互评，而且是中文课程，所以说明书会有中文和英文</p>
+<p>Updated time 2015-06-21 07:34:53 ; R version R version 3.2.0 (2015-04-16) ; Platform x86_64-apple-darwin13.4.0</p>
+<p>更新时间 2015-06-21 07:34:53 ; R 版本 R version 3.2.0 (2015-04-16); 平台 x86_64-apple-darwin13.4.0</p>
+<p>The most time-intensive parts are: downloda data, read data, join all elements of a list into a dataframe.</p>
+</div>
 <div id="background" class="section level1">
 <h1>Background</h1>
 <p>One of the most exciting areas in all of data science right now is wearable computing - see for example <a href="http://www.insideactivitytracking.com/data-science-activity-tracking-and-the-battle-for-the-worlds-top-sports-brand/">this article</a> . Companies like Fitbit, Nike, and Jawbone Up are racing to develop the most advanced algorithms to attract new users. The data linked to from the course website represent data collected from the accelerometers from the Samsung Galaxy S smartphone. A full description is available at the site where the data was obtained:</p>
 <p><a href="http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones"><a href="http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones" class="uri">http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones</a></a></p>
 <p>The purpose of this project is to prepare tidy data that can be used for later analysis. Download the <a href="https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip">data</a></p>
+<p>现在，所有数据科学中最令人兴奋的领域之一就是可穿戴计算请看<a href="http://www.insideactivitytracking.com/data-science-activity-tracking-and-the-battle-for-the-worlds-top-sports-brand/">这篇文章</a>。公司（例如，Fitbit、Nike和JawboneUp）正在竞相发展最先进的算法来吸引新用户。与课程网站关联的数据表示从三星Galaxy S智能手机的加速器上收集的数据。完整的解释可在获得数据的网站上获取：</p>
+<p><a href="http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones"><a href="http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones" class="uri">http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones</a></a></p>
+<p>这项课程的目的是准备用于后续分析的整洁数据, 可以从<a href="https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip">这里</a>下载</p>
 </div>
-<div id="this-repository-includes-the-following-files" class="section level1">
-<h1>This repository includes the following files</h1>
-<div id="analysis-script" class="section level3">
-<h3>analysis script:</h3>
-<ul>
-<li>run_analysis.R</li>
-<li>run_analysis.md</li>
-<li>run_analysis.Rmd</li>
-<li>run_analysis.txt</li>
-<li>run_analysis.html ###Readme file</li>
-<li>README.Rmd</li>
-<li>README.md</li>
-<li>README.html ###CodeBook</li>
-<li>CodeBook.Rmd</li>
-<li>CodeBook.md</li>
-<li>CodeBook.html</li>
-</ul>
-<p>You can check how the script work in the run_analysis.Rmd.</p>
+<div id="download-and-unzip-the-data" class="section level1">
+<h1>Download and Unzip the Data</h1>
+<p>下载和解压数据</p>
+<pre class="r"><code>if(!file.exists(&quot;/data&quot;)) dir.create(&quot;./data&quot;)</code></pre>
+<pre><code>## Warning in dir.create(&quot;./data&quot;): './data' already exists</code></pre>
+<pre class="r"><code>Url&lt;-&quot;https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip&quot;
+download.file(Url, &quot;./data/UCI HAR Dataset.zip&quot;, method = &quot;curl&quot;)
+unzip(&quot;./data/UCI HAR Dataset.zip&quot;)</code></pre>
+</div>
+<div id="read-data" class="section level1">
+<h1>Read data</h1>
+<p>读数据</p>
+<pre class="r"><code>wd&lt;-&quot;./data/UCI HAR Dataset&quot;
+Teset&lt;-read.table(file.path(wd, &quot;test/X_test.txt&quot;))
+Telabel&lt;-read.table(file.path(wd, &quot;test/y_test.txt&quot;))
+Tesubject&lt;-read.table(file.path(wd, &quot;test/subject_test.txt&quot;))
+Trset&lt;-read.table(file.path(wd, &quot;train/X_train.txt&quot;))
+Trlabel&lt;-read.table(file.path(wd, &quot;train/y_train.txt&quot;))
+Trsubject&lt;-read.table(file.path(wd, &quot;train/subject_train.txt&quot;))</code></pre>
+<p>Inside: Te means test, Tr means train, label means activity label 其中：Te表示测试，Tr表示培训，label表示活动标签</p>
+</div>
+<div id="merges-the-training-and-the-test-sets-to-create-one-data-set." class="section level1">
+<h1>Merges the training and the test sets to create one data set.</h1>
+<p>整合培训和测试集，创建一个数据集</p>
+<pre class="r"><code>te&lt;-cbind(Tesubject,Telabel,Teset)
+tr&lt;-cbind(Trsubject,Trlabel,Trset)
+da&lt;-rbind(tr,te)</code></pre>
+<p>da means raw data frame to be processed da表示要处理的原始数据框</p>
+</div>
+<div id="extracts-only-the-measurements-on-the-mean-and-standard-deviation-for-each-measurement." class="section level1">
+<h1>Extracts only the measurements on the mean and standard deviation for each measurement.</h1>
+<p>仅提取测量的平均值以及每次测量的标准差.</p>
+<p>Note that characters in feature.txt include “mean” are “…mean()” and “…meanFreq()” 注意到在feature.txt中包含mean的字符有“…mean()” 和 “…meanFreq()”</p>
+<pre class="r"><code>feature&lt;-read.table(file.path(wd,&quot;features.txt&quot;))
+meancol&lt;-setdiff(grep(&quot;mean&quot;, feature[,2]),grep(&quot;meanFreq&quot;, feature[,2]))
+stdcol&lt;-grep(&quot;std&quot;, feature[,2])
+Col&lt;-sort(c(meancol,stdcol))+2
+da1&lt;-da[,c(1,2,Col)]</code></pre>
+</div>
+<div id="uses-descriptive-activity-names-and-descriptive-variable-names." class="section level1">
+<h1>Uses descriptive activity names and descriptive variable names.</h1>
+<p>使用描述性活动名和变量名</p>
+<pre class="r"><code>colnames(da1)&lt;-c(&quot;subject&quot;,&quot;activity&quot;,as.character(feature[Col-2,2]))
+activityname&lt;-read.table(file.path(wd,&quot;activity_labels.txt&quot;),col.names = c(&quot;activity&quot;,&quot;Activitynames&quot;))
+da1&lt;-merge(da1,activityname,by=&quot;activity&quot;,all=T)
+da2&lt;-da1[,c(69,2,3:68)]</code></pre>
+</div>
+<div id="from-the-data-set-in-last-step-creates-a-second-independent-tidy-data-set-with-the-average-of-each-variable-for-each-activity-and-each-subject." class="section level1">
+<h1>From the data set in last step, creates a second, independent tidy data set with the average of each variable for each activity and each subject.</h1>
+<p>从上一步的数据集中，针对每个活动和每个主题使用每个表里的平均值建立第2个独立的整洁数据集.</p>
+<pre class="r"><code>library(reshape2)
+library(plyr)
+da3&lt;-melt(da2,c(&quot;Activitynames&quot;,&quot;subject&quot;))
+da4&lt;-acast(da3, variable~Activitynames~subject, mean)
+da5&lt;-as.data.frame(da4)
+da5&lt;-t(da5)
+da5&lt;-as.data.frame(da5)
+da6&lt;-cbind(activity=rep(as.character(activityname$Activitynames),each=30),object=rep(1:30,times=6),da5)
+nof&lt;-ncol(da6)-2
+nda&lt;-list()
+for(i in 1:nof){
+        f1&lt;-colnames(da6[2+i])
+        f2&lt;-strsplit(f1,&quot;-&quot;,fixed = T)[[1]]
+        nda[[i]]&lt;-cbind(da6[,2:1],feature=f2[1],method=f2[2],axial=f2[3],meanvalue=da6[,2+i])
+}
+mda&lt;-join_all(nda,type=&quot;full&quot;)</code></pre>
+<pre><code>## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue
+## Joining by: object, activity, feature, method, axial, meanvalue</code></pre>
+<pre class="r"><code>mda&lt;-mda[order(mda$object,mda$activity,mda$feature,mda$method,mda$axial),]</code></pre>
+</div>
+<div id="upload-data-set-as-a-txt-file" class="section level1">
+<h1>upload data set as a txt file</h1>
+<p>上传txt格式的数据</p>
+<pre class="r"><code>write.table(mda,&quot;run_analysis.txt&quot;,row.names = F)</code></pre>
 <p>Thank you for your time !</p>
-</div>
-</div>
-<div id="license" class="section level1">
-<h1>License:</h1>
-<p>Use of this dataset in publications must be acknowledged by referencing the following publication [1]</p>
-<p>[1] Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. Human Activity Recognition on Smartphones using a Multiclass Hardware-Friendly Support Vector Machine. International Workshop of Ambient Assisted Living (IWAAL 2012). Vitoria-Gasteiz, Spain. Dec 2012</p>
-<p>This dataset is distributed AS-IS and no responsibility implied or explicit can be addressed to the authors or their institutions for its use or misuse. Any commercial use is prohibited.</p>
-<p>Jorge L. Reyes-Ortiz, Alessandro Ghio, Luca Oneto, Davide Anguita. November 2012.</p>
+<p>谢谢！</p>
 </div>
 
 

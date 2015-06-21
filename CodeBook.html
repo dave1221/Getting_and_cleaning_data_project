@@ -64,26 +64,39 @@ img {
 </div>
 
 
-<div id="variables" class="section level1">
-<h1>Variables</h1>
-<p>Variables are selected according to the features from original data, but only chosen by two methods: mean() and std().</p>
+<div id="background" class="section level1">
+<h1>Background</h1>
+<p>The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a smartphone (Samsung Galaxy S II) on the waist. Using its embedded accelerometer and gyroscope, we captured 3-axial linear acceleration and 3-axial angular velocity at a constant rate of 50Hz.</p>
 <p>The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix ‘t’ to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz.</p>
 <p>Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag).</p>
 <p>Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the ‘f’ to indicate frequency domain signals).</p>
 <p>These signals were used to estimate variables of the feature vector for each pattern:<br />‘-XYZ’ is used to denote 3-axial signals in the X, Y and Z directions.</p>
-<p>tBodyAcc-XYZ tGravityAcc-XYZ tBodyAccJerk-XYZ tBodyGyro-XYZ tBodyGyroJerk-XYZ tBodyAccMag tGravityAccMag tBodyAccJerkMag tBodyGyroMag tBodyGyroJerkMag fBodyAcc-XYZ fBodyAccJerk-XYZ fBodyGyro-XYZ fBodyAccMag fBodyAccJerkMag fBodyGyroMag fBodyGyroJerkMag</p>
-<p>The set of variables that were estimated from these signals are:</p>
-<p>mean(): Mean value std(): Standard deviation</p>
-<div id="column-names" class="section level2">
-<h2>column names</h2>
-<p>[1] “tBodyAcc-mean()-X” “tBodyAcc-mean()-Y”<br /> [3] “tBodyAcc-mean()-Z” “tBodyAcc-std()-X”<br /> [5] “tBodyAcc-std()-Y” “tBodyAcc-std()-Z”<br /> [7] “tGravityAcc-mean()-X” “tGravityAcc-mean()-Y”<br /> [9] “tGravityAcc-mean()-Z” “tGravityAcc-std()-X”<br />[11] “tGravityAcc-std()-Y” “tGravityAcc-std()-Z”<br />[13] “tBodyAccJerk-mean()-X” “tBodyAccJerk-mean()-Y”<br />[15] “tBodyAccJerk-mean()-Z” “tBodyAccJerk-std()-X”<br />[17] “tBodyAccJerk-std()-Y” “tBodyAccJerk-std()-Z”<br />[19] “tBodyGyro-mean()-X” “tBodyGyro-mean()-Y”<br />[21] “tBodyGyro-mean()-Z” “tBodyGyro-std()-X”<br />[23] “tBodyGyro-std()-Y” “tBodyGyro-std()-Z”<br />[25] “tBodyGyroJerk-mean()-X” “tBodyGyroJerk-mean()-Y”<br />[27] “tBodyGyroJerk-mean()-Z” “tBodyGyroJerk-std()-X”<br />[29] “tBodyGyroJerk-std()-Y” “tBodyGyroJerk-std()-Z”<br />[31] “tBodyAccMag-mean()” “tBodyAccMag-std()”<br />[33] “tGravityAccMag-mean()” “tGravityAccMag-std()”<br />[35] “tBodyAccJerkMag-mean()” “tBodyAccJerkMag-std()”<br />[37] “tBodyGyroMag-mean()” “tBodyGyroMag-std()”<br />[39] “tBodyGyroJerkMag-mean()” “tBodyGyroJerkMag-std()”<br />[41] “fBodyAcc-mean()-X” “fBodyAcc-mean()-Y”<br />[43] “fBodyAcc-mean()-Z” “fBodyAcc-std()-X”<br />[45] “fBodyAcc-std()-Y” “fBodyAcc-std()-Z”<br />[47] “fBodyAccJerk-mean()-X” “fBodyAccJerk-mean()-Y”<br />[49] “fBodyAccJerk-mean()-Z” “fBodyAccJerk-std()-X”<br />[51] “fBodyAccJerk-std()-Y” “fBodyAccJerk-std()-Z”<br />[53] “fBodyGyro-mean()-X” “fBodyGyro-mean()-Y”<br />[55] “fBodyGyro-mean()-Z” “fBodyGyro-std()-X”<br />[57] “fBodyGyro-std()-Y” “fBodyGyro-std()-Z”<br />[59] “fBodyAccMag-mean()” “fBodyAccMag-std()”<br />[61] “fBodyBodyAccJerkMag-mean()” “fBodyBodyAccJerkMag-std()”<br />[63] “fBodyBodyGyroMag-mean()” “fBodyBodyGyroMag-std()”<br />[65] “fBodyBodyGyroJerkMag-mean()” “fBodyBodyGyroJerkMag-std()”</p>
+</div>
+<div id="variables" class="section level1">
+<h1>Variables</h1>
+<div id="six-variables" class="section level2">
+<h2>six variables:</h2>
+<ul>
+<li>object: number of volunteers, from 1 to 30</li>
+<li>activity: six activities, ordered: “LAYING” “SITTING” “STANDING” “WALKING” “WALKING_DOWNSTAIRS” “WALKING_UPSTAIRS”</li>
+<li>feature: 17 features, ordered: “tBodyAcc” “tGravityAcc” “tBodyAccJerk” “tBodyGyro” “tBodyGyroJerk” “tBodyAccMag” “tGravityAccMag” “tBodyAccJerkMag” “tBodyGyroMag” “tBodyGyroJerkMag” “fBodyAcc” “fBodyAccJerk” “fBodyGyro” “fBodyAccMag” “fBodyBodyAccJerkMag” “fBodyBodyGyroMag” “fBodyBodyGyroJerkMag”</li>
+<li>method: 2 method, ordered: “mean()” “std()”</li>
+<li>axial: 3 axials, ordered: “X” “Y” “Z”</li>
+<li>meanvalue: mean value of upper levels, lentgh: 11880</li>
+</ul>
+<p>11880 obeservations in different levels</p>
 </div>
 </div>
-<div id="row" class="section level1">
-<h1>Row</h1>
-<p>For each subject on each activity we calculated the mean value of each variables. Six activities: 1 WALKING 2 WALKING_UPSTAIRS 3 WALKING_DOWNSTAIRS 4 SITTING 5 STANDING 6 LAYING Object random change from 1 to 30</p>
-<p>The observations’ name: [1] “LAYING.1” “SITTING.1” “STANDING.1”<br /> [4] “WALKING.1” “WALKING_DOWNSTAIRS.1” “WALKING_UPSTAIRS.1”<br /> [7] “LAYING.2” “SITTING.2” “STANDING.2”<br /> [10] “WALKING.2” “WALKING_DOWNSTAIRS.2” “WALKING_UPSTAIRS.2”<br /> [13] “LAYING.3” “SITTING.3” “STANDING.3”<br /> [16] “WALKING.3” “WALKING_DOWNSTAIRS.3” “WALKING_UPSTAIRS.3”<br /> [19] “LAYING.4” “SITTING.4” “STANDING.4”<br /> [22] “WALKING.4” “WALKING_DOWNSTAIRS.4” “WALKING_UPSTAIRS.4”<br /> [25] “LAYING.5” “SITTING.5” “STANDING.5”<br /> [28] “WALKING.5” “WALKING_DOWNSTAIRS.5” “WALKING_UPSTAIRS.5”<br /> [31] “LAYING.6” “SITTING.6” “STANDING.6”<br /> [34] “WALKING.6” “WALKING_DOWNSTAIRS.6” “WALKING_UPSTAIRS.6”<br /> [37] “LAYING.7” “SITTING.7” “STANDING.7”<br /> [40] “WALKING.7” “WALKING_DOWNSTAIRS.7” “WALKING_UPSTAIRS.7”<br /> [43] “LAYING.8” “SITTING.8” “STANDING.8”<br /> [46] “WALKING.8” “WALKING_DOWNSTAIRS.8” “WALKING_UPSTAIRS.8”<br /> [49] “LAYING.9” “SITTING.9” “STANDING.9”<br /> [52] “WALKING.9” “WALKING_DOWNSTAIRS.9” “WALKING_UPSTAIRS.9”<br /> [55] “LAYING.10” “SITTING.10” “STANDING.10”<br /> [58] “WALKING.10” “WALKING_DOWNSTAIRS.10” “WALKING_UPSTAIRS.10”<br /> [61] “LAYING.11” “SITTING.11” “STANDING.11”<br /> [64] “WALKING.11” “WALKING_DOWNSTAIRS.11” “WALKING_UPSTAIRS.11”<br /> [67] “LAYING.12” “SITTING.12” “STANDING.12”<br /> [70] “WALKING.12” “WALKING_DOWNSTAIRS.12” “WALKING_UPSTAIRS.12”<br /> [73] “LAYING.13” “SITTING.13” “STANDING.13”<br /> [76] “WALKING.13” “WALKING_DOWNSTAIRS.13” “WALKING_UPSTAIRS.13”<br /> [79] “LAYING.14” “SITTING.14” “STANDING.14”<br /> [82] “WALKING.14” “WALKING_DOWNSTAIRS.14” “WALKING_UPSTAIRS.14”<br /> [85] “LAYING.15” “SITTING.15” “STANDING.15”<br /> [88] “WALKING.15” “WALKING_DOWNSTAIRS.15” “WALKING_UPSTAIRS.15”<br /> [91] “LAYING.16” “SITTING.16” “STANDING.16”<br /> [94] “WALKING.16” “WALKING_DOWNSTAIRS.16” “WALKING_UPSTAIRS.16”<br /> [97] “LAYING.17” “SITTING.17” “STANDING.17”<br />[100] “WALKING.17” “WALKING_DOWNSTAIRS.17” “WALKING_UPSTAIRS.17”<br />[103] “LAYING.18” “SITTING.18” “STANDING.18”<br />[106] “WALKING.18” “WALKING_DOWNSTAIRS.18” “WALKING_UPSTAIRS.18”<br />[109] “LAYING.19” “SITTING.19” “STANDING.19”<br />[112] “WALKING.19” “WALKING_DOWNSTAIRS.19” “WALKING_UPSTAIRS.19”<br />[115] “LAYING.20” “SITTING.20” “STANDING.20”<br />[118] “WALKING.20” “WALKING_DOWNSTAIRS.20” “WALKING_UPSTAIRS.20”<br />[121] “LAYING.21” “SITTING.21” “STANDING.21”<br />[124] “WALKING.21” “WALKING_DOWNSTAIRS.21” “WALKING_UPSTAIRS.21”<br />[127] “LAYING.22” “SITTING.22” “STANDING.22”<br />[130] “WALKING.22” “WALKING_DOWNSTAIRS.22” “WALKING_UPSTAIRS.22”<br />[133] “LAYING.23” “SITTING.23” “STANDING.23”<br />[136] “WALKING.23” “WALKING_DOWNSTAIRS.23” “WALKING_UPSTAIRS.23”<br />[139] “LAYING.24” “SITTING.24” “STANDING.24”<br />[142] “WALKING.24” “WALKING_DOWNSTAIRS.24” “WALKING_UPSTAIRS.24”<br />[145] “LAYING.25” “SITTING.25” “STANDING.25”<br />[148] “WALKING.25” “WALKING_DOWNSTAIRS.25” “WALKING_UPSTAIRS.25”<br />[151] “LAYING.26” “SITTING.26” “STANDING.26”<br />[154] “WALKING.26” “WALKING_DOWNSTAIRS.26” “WALKING_UPSTAIRS.26”<br />[157] “LAYING.27” “SITTING.27” “STANDING.27”<br />[160] “WALKING.27” “WALKING_DOWNSTAIRS.27” “WALKING_UPSTAIRS.27”<br />[163] “LAYING.28” “SITTING.28” “STANDING.28”<br />[166] “WALKING.28” “WALKING_DOWNSTAIRS.28” “WALKING_UPSTAIRS.28”<br />[169] “LAYING.29” “SITTING.29” “STANDING.29”<br />[172] “WALKING.29” “WALKING_DOWNSTAIRS.29” “WALKING_UPSTAIRS.29”<br />[175] “LAYING.30” “SITTING.30” “STANDING.30”<br />[178] “WALKING.30” “WALKING_DOWNSTAIRS.30” “WALKING_UPSTAIRS.30”</p>
-<p>See run_analysis.md or run_analysis.rmd for details on dataset creation.</p>
+<div id="steps-on-tidying-the-dataset" class="section level1">
+<h1>steps on tidying the dataset</h1>
+<ol style="list-style-type: decimal">
+<li>Combine train data and test data</li>
+<li>Abstract features from the method mean() and std(), nitice exclude method meanFreq()</li>
+<li>Name the abstrcted data by using the feature names and activity names</li>
+<li>Calculate mean value of each feature on activity level and subject value</li>
+<li>Split each feature into three variables: feture, method and axial</li>
+<li>Merge all the features into a long data frame.</li>
+</ol>
 </div>
 
 
