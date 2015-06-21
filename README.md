@@ -2,7 +2,7 @@
 
 
 
-Updated time 2015-06-21 08:16:21 ;  R version 3.2.0 (2015-04-16) ; Platform x86_64-apple-darwin13.4.0
+Updated time 2015-06-21 08:27:42 ;  R version 3.2.0 (2015-04-16) ; Platform x86_64-apple-darwin13.4.0
 
 #Background 
 
@@ -20,10 +20,12 @@ The purpose of this project is to prepare tidy data that can be used for later a
 - run_analysis.Rmd
 - run_analysis.txt
 - run_analysis.html
+
 ###Readme file
 - README.Rmd
 - README.md
 - README.html
+
 ###CodeBook
 - CodeBook.Rmd
 - CodeBook.md

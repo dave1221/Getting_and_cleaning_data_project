@@ -29,10 +29,12 @@ The purpose of this project is to prepare tidy data that can be used for later a
 - run_analysis.Rmd
 - run_analysis.txt
 - run_analysis.html
+
 ###Readme file
 - README.Rmd
 - README.md
 - README.html
+
 ###CodeBook
 - CodeBook.Rmd
 - CodeBook.md
